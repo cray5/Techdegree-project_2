@@ -30,7 +30,7 @@ function showPage(list, page) {
    }
 };
 
-
+showPage(listItems, 1);// calling showPage function on listItems and for 1st page, so the default on loading is the first 10 array elements.
 
 
 /*** 
@@ -79,6 +79,7 @@ function appendPageLinks(list) {
    container.appendChild(paginationDiv);
 };
 
+appendPageLinks(listItems);//invoking the appendPageLinks function on the listItems i.e the list of students.
 
 function searchComponents() {
    // function  createComponent creates element. Arguments it takes are as follows:-
@@ -105,6 +106,7 @@ function searchComponents() {
 
 }
 
+searchComponents(); //adding the search bar
 
 function searchFunctionality() {
    const container = document.querySelector('.page'); //to get the div with class page
@@ -155,10 +157,9 @@ function searchFunctionality() {
 
 
    
-      //the div which containes the pagination links.i.e numbers on the bottom of the page.
-      const linkDiv = document.querySelector('.pagination');
+      // document.querySelector('.pagination') the div which containes the pagination links.i.e numbers on the bottom of the page.
       //pagination links are removed first to avoid duplication when the list from the 'searchResult' is displayed.    
-      container.removeChild(linkDiv);
+      container.removeChild(document.querySelector('.pagination'));
       //display the the list from the 'searchResult' array and paginate the list according
       showPage(searchResult, 1);
       //display the page links
@@ -170,11 +171,11 @@ function searchFunctionality() {
       //before the last element child of the container element and display the message
       if (count === listItems.length) {
          container.insertBefore(messageDiv, container.lastElementChild);
-         linkDiv.style.display = 'none';
+         document.querySelector('.pagination').style.display = 'none';
          messageDiv.style.display = '';
       } else {
-         messageDiv.style.display = 'none';
-         linkDiv.style.display = '';
+         document.querySelector('.pagination').style.display = '';
+         messageDiv.style.display = 'none';  
       }
    };
 
@@ -192,7 +193,7 @@ function searchFunctionality() {
 }
 
 
-showPage(listItems, 1);// calling showPage function on listItems and for 1st page, so the default on loading is the first 10 array elements.
-appendPageLinks(listItems);//invoking the appendPageLinks function on the listItems i.e the list of students.
-searchComponents(); //adding the search bar
+// showPage(listItems, 1);// calling showPage function on listItems and for 1st page, so the default on loading is the first 10 array elements.
+// appendPageLinks(listItems);//invoking the appendPageLinks function on the listItems i.e the list of students.
+// searchComponents(); //adding the search bar
 searchFunctionality(); // adding the search functionality on the search bar.
