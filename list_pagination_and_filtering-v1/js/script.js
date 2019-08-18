@@ -22,7 +22,7 @@ function showPage(list, page) {
    const startIndex = (page * perPage) - perPage;
    const endIndex = (page * perPage) - 1;
    for (let i = 0; i < list.length; i += 1) {
-      if (i >= startIndex && i <= endIndex) {
+      if ((i >= startIndex) && (i <= endIndex)) {
          list[i].style.display = '';
       } else {
          list[i].style.display = 'none';
@@ -30,9 +30,8 @@ function showPage(list, page) {
    }
 };
 
-// calling showPage function on listItems and for 1st page, so the default on loading is the first 10 array elements.
 
-showPage(listItems, 1);
+
 
 /*** 
    `appendPageLinks function` to generate, append, and add 
@@ -80,7 +79,6 @@ function appendPageLinks(list) {
    container.appendChild(paginationDiv);
 };
 
-appendPageLinks(listItems); //invoking the appendPageLinks function on the listItems i.e the list of students.
 
 function searchComponents() {
    // function  createComponent creates element. Arguments it takes are as follows:-
@@ -107,7 +105,6 @@ function searchComponents() {
 
 }
 
-searchComponents();
 
 function searchFunctionality() {
    const container = document.querySelector('.page'); //to get the div with class page
@@ -117,8 +114,8 @@ function searchFunctionality() {
    const studentName = document.querySelectorAll('h3');
 
    /*create the div  which prints the message 'no results found' when there are no matches on the list.*/
-   let messageDiv = document.createElement('div');
-   let p = document.createElement('p');
+   const messageDiv = document.createElement('div');
+   const p = document.createElement('p');
    p.textContent = "No results found."
    messageDiv.appendChild(p);
 
@@ -141,24 +138,27 @@ function searchFunctionality() {
       for (let i = 0; i < names.length; i++) {
          if (input.value.length !== 0) {
             if (names[i].textContent.toLowerCase().includes(input.value.toLowerCase())) {
-               listItems[i].style.display = 'block';
-               // store each of the displayed student name in the 'searchResult' array
-               searchResult.push(listItems[i]);
-            } else {
-               count++;
-               listItems[i].style.display = 'none';
+                  listItems[i].style.display = 'block';
+                  // store each of the displayed student name in the 'searchResult' array
+                  searchResult.push(listItems[i]);
+               } else {
+                  count++;
+                  listItems[i].style.display = 'none';
             }
-         } else {
-            //if nothing is typed in the search input, display all the list of students
-            //and each of their li elements are stored in the 'searchResult' array
+      } else {
+         //if nothing is typed in the search input, display all the list of students
+         //and each of their li elements are stored in the 'searchResult' array
             listItems[i].style.display = 'block';
             searchResult.push(listItems[i]);
-         }
       }
+   }
 
 
+   
+      //the div which containes the pagination links.i.e numbers on the bottom of the page.
+      const linkDiv = document.querySelector('.pagination');
       //pagination links are removed first to avoid duplication when the list from the 'searchResult' is displayed.    
-      container.removeChild(document.querySelector('.pagination'));
+      container.removeChild(linkDiv);
       //display the the list from the 'searchResult' array and paginate the list according
       showPage(searchResult, 1);
       //display the page links
@@ -170,9 +170,11 @@ function searchFunctionality() {
       //before the last element child of the container element and display the message
       if (count === listItems.length) {
          container.insertBefore(messageDiv, container.lastElementChild);
+         linkDiv.style.display = 'none';
          messageDiv.style.display = '';
       } else {
          messageDiv.style.display = 'none';
+         linkDiv.style.display = '';
       }
    };
 
@@ -180,7 +182,7 @@ function searchFunctionality() {
    button.addEventListener('click', (event) => {
       event.preventDefault();
       // Invoked performSearch function here - Arguments: search, studentName
-      performSearch(search, studentName);
+      performSearch(search, studentName); 
    });
 
    search.addEventListener('keyup', () => {
@@ -189,4 +191,8 @@ function searchFunctionality() {
    });
 }
 
-searchFunctionality();
+
+showPage(listItems, 1);// calling showPage function on listItems and for 1st page, so the default on loading is the first 10 array elements.
+appendPageLinks(listItems);//invoking the appendPageLinks function on the listItems i.e the list of students.
+searchComponents(); //adding the search bar
+searchFunctionality(); // adding the search functionality on the search bar.
